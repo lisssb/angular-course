@@ -41,6 +41,7 @@ app.controller('ParentCtrl', [function(){
   this.formats = ['dd/MM/yyyy', 'MM/dd/yyyy'];
 
 
+
 }]);
 
 app.controller('ChildCtrl', [function(){
