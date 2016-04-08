@@ -1,0 +1,7 @@
+* un scope nunca deberia acceder a sus padress ni a sus hijos. Porque estariamos aplicando el codigo.
+
+* las directivas en angular son igual que los componentes en react o en angular2
+
+* Un input escribe en un scope (esto se hace con una directiva), ya que la vista solo puede leer, no escribir.
+
+* :: var  no se muestra los cambios de var para mejorar el rendimiento. (esto se suele utilizar para la internalizacion)

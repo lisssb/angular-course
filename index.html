@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first application angular</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css"
+  href="bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script type="text/javascript" src="angular/angular.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</head>
+<body ng-app="diaryApp">
+  <div ng-controller="diaryCtrl as agenda" class="container">
+    <div class="row ">
+      <div class="col-md-8">
+        <div class="row ">
+          <div class="col-md-8">
+            <h2>
+              {{agenda.title}}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
