@@ -19,36 +19,24 @@
 </head>
 <body ng-app="app">
   <div ng-controller="ParentCtrl as parentCtrl" class="container">
-    {{parentCtrl.title}}
-    <div ng-controller="ChildCtrl as childCtrl" class="container">
-      {{childCtrl.title}}
-      <label> name:
-      <input type= "text" ng-model="parentCtrl.title" ng-change="parentCtrl.onChange()"/>
-      <button type= "button" ng-click="parentCtrl.onClick($event)">click me
-      </button>
-      <!-- <div ng-show="parentCtrl.title==='Mi agenda'">
-        {{parentCtrl.title}}
-      </div>
-      <div ng-if="parentCtrl.title === 'Mi agenda'">
-        Teacher
-      </div> -->
-      <ul><li ng-repeat="user in parentCtrl.users"  ng-include="'miplantilla'" > <!--ng-class="{par : $even, impar: $odd}"  en cada li me crea un scope por eso no tenemos problemas con closures-->
-      {{$index}}{{user.name}}: {{user.age}}
-      {{$even}}
-      <button type="button" ng-click="parentCtrl.saluda(user)">Saluda</button>
-      </li></ul>
-      <!--<div ng-include="'miplantilla'"></div>-->
-    </label>
+    <select ng-model="parentCtrl.formatDate" ng-options="item as item for item in parentCtrl.formats"  ng-init="parentCtrl.formatDate=parentCtrl.formats[0]"><!--iteme s lo que se guardara en el model--><!--label lo que se muestra al usuario--><!--el utlimo item es el elemento iterativo de la lista-->
 
-    </div>
-
+    </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Edad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat = "user in parentCtrl.users">
+          <td>{{user.name}}</td>
+          <td>{{user.age | currency:'€'}}</td>
+          <td>{{user.date | date:parentCtrl.formatDate}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <script type="text/ng-template" id="miplantilla">
-
-    <div>
-    <span>{{user.name}}</span>
-    </div>
-
-  </script>
 </body>
 </html>

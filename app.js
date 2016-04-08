@@ -16,18 +16,31 @@ app.controller('ParentCtrl', [function(){
 
   this.users = [{
     name : 'Liss',
-    age : 28
+    age : 28,
+    date : Date.now()
   }, {
     name : 'Marcial',
-    age : 27
+    age : 27,
+    date :Date.now()
   },
   {
     name : "Elba",
-    age : 45
+    age : 45,
+    date : Date.now()
+  }, {
+    name : 'Kate',
+    age : 25,
+    date :  Date.now()
+  },
+  {
+    name : "Anthony",
+    age : 21,
+    date : Date.now()
   }];
 
+  this.formats = ['dd/MM/yyyy', 'MM/dd/yyyy'];
 
-  
+
 }]);
 
 app.controller('ChildCtrl', [function(){

@@ -91,3 +91,13 @@ cuando lo que este entre parentesis tenga valor ponmelo en el src.
 
 
 #el include me cepilla cosas
+
+
+* revisar ng-class
+
+#Filtros
+nos permiten modifiar la informacion q estamos viendo
+
+
+#ng-options
+nos genera las opciones de un select. Tenemos que meterle ng-model
