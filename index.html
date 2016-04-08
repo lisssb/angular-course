@@ -28,9 +28,9 @@
     <table>
       <thead>
         <tr>
-          <th ng-click="parentCtrl.sort = 'name'">Nombre</th>
-          <th ng-click="parentCtrl.sort = 'age'">Edad</th>
-          <th ng-click="parentCtrl.sort = 'date'">Fecha de nacimiento</th>
+          <th ng-click="parentCtrl.sort === 'name'? parentCtrl.sort = '-name' : parentCtrl.sort = 'name'">Nombre</th>
+          <th ng-click="parentCtrl.sort === 'age'? parentCtrl.sort = '-age' : parentCtrl.sort = 'age'">Edad</th>
+          <th ng-click="parentCtrl.sort === 'date'? parentCtrl.sort = '-date' : parentCtrl.sort = 'date'">Fecha de nacimiento</th>
         </tr>
       </thead>
       <tbody>
