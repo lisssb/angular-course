@@ -101,3 +101,24 @@ nos permiten modifiar la informacion q estamos viendo
 
 #ng-options
 nos genera las opciones de un select. Tenemos que meterle ng-model
+
+
+
+
+#SERVICIOS
+en angular2 no existe niservice ni facory ni peovider
+
+ * Service sigue el patron prototype. publico con this
+ * Factory sigue el patron readmode?? publico devuelveu npobjeto
+
+function(){
+  var users = [{}};
+  var createUser = function(){};
+  var listUsers = function(){};
+  return {
+    createUser : createUser,
+    listUsers : listUsers
+  };
+}
+
+* el injector de angular injecta los servicios y factorias

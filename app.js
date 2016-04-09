@@ -38,10 +38,22 @@ app.controller('ParentCtrl', [function(){
     date : Date.now()
   }];
 
-  this.formats = ['dd/MM/yyyy', 'MM/dd/yyyy'];
+  this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
 
 
 
+}]);
+
+//un filtro siempre tiene que devolver una funcion. SIEMPRE. Lo que le llega es lo que esta en la parte izquierda del pipe
+app.filter ('pagination', [function(){
+  return function(items, numElem){
+    var length = Math.ceil(items.length /numElem);
+    var arr = []
+    for (var i = 0; i < length; i++){
+      arr.push(i);
+    }
+    return arr;
+  };
 }]);
 
 app.controller('ChildCtrl', [function(){
