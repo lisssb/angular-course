@@ -29,29 +29,34 @@ app.factory('UserFactory', [function(){
     name : 'Liss',
     age : 28,
     job : "FullStack",
-    date : Date.now()
+    date : Date.now(),
+    addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]
   }, {
     name : 'Marcial',
     age : 27,
     job : "Backend",
-    date :Date.now()
+    date :Date.now(),
+    addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]
   },
   {
     name : "Elba",
     age : 45,
     job : "System administrator",
-    date : Date.now()
+    date : Date.now(),
+    addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]
   }, {
     name : 'Kate',
     age : 25,
     job : "Frontend",
-    date :  Date.now()
+    date :  Date.now(),
+    addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]
   },
   {
     name : "Anthony",
     age : 21,
     job : "CTO",
-    date : Date.now()
+    date : Date.now(),
+    addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]
   }];
   var createUser = function(user){
     users.push(user);
@@ -78,14 +83,28 @@ app.factory('UserFactory', [function(){
 
 }]);
 
-app.controller('ManageCtrl', [function(){
+app.controller('ManageCtrl', ['UserFactory', function(userFactory){
   this.jobs = ["FullStack","Backend","Frontend","System administrator","CTO"]
   this.onSubmit = function(){
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
-      alert("sumi");
-      console.log(this.user)
+    debugger;
+      userFactory.createUser(angular.copy(this.user));
+      this.user = null;
+      this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
     }
   };
+  this.addAddress = function(){
+    if(!this.user){
+      this.user = {
+        addresses : []
+      };
+    }
+    if(this.user && !this.user.addresses){
+      this.user.addresses = [];
+    }
+    this.user.addresses.push({});
+  };
+  //this.user = {addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]}
 }]);
 app.controller('ParentCtrl', ['$filter', 'UserFactory', function($filter, UserFactory){
   this.title="Mi agenda";
