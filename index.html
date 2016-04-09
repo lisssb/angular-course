@@ -15,10 +15,21 @@
   .impar{
     background: : 'blue';
   }
+  .cold-md-6{
+    float: left;
+    width: 50%;
+    margin: 0;
+  }
+  label{
+    display: block;
+  }
+  .errors{
+    color:red;
+  }
   </style>
 </head>
 <body ng-app="app">
-  <div ng-controller="ParentCtrl as parentCtrl" class="container">
+  <div ng-controller="ParentCtrl as parentCtrl" class="container cold-md-6">
     <select ng-model="parentCtrl.formatDate"
     ng-options="item.format as item.name for item in parentCtrl.formats"
     ng-init="parentCtrl.formatDate=parentCtrl.formats[0].format"><!--iteme s lo que se guardara en el model--><!--label lo que se muestra al usuario--><!--el utlimo item es el elemento iterativo de la lista-->
@@ -57,6 +68,44 @@
     <div>
       <button type="button" ng-click="parentCtrl.offset=i*parentCtrl.numElems" ng-repeat="i in parentCtrl.users | pagination:parentCtrl.numElems">Pagina {{i+1}}</button>
     </div>
+  </div>
+
+  <div ng-controller="ManageCtrl as manageCtrl" class="cold-md-6">
+
+  <form name="manageCtrl.form" novalidate ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"><!--podemos el manageCtrl para que form no se nos cree en el scope-->
+    <label>
+    Nombre:
+    <input type="text" name="name" ng-model="manageCtrl.user.name" required ng-minlength="4"></input>
+    <div class="errors" ng-show="manageCtrl.form.$submitted">
+      <span ng-show="manageCtrl.form.name.$error.required">Campo obligatorio</span>
+      <span ng-show="manageCtrl.form.name.$error.minlength">Minimo 4 caracteres</span>
+    </div>
+    </label>
+    <label>
+    Edad:
+    <input type="number" name="age" ng-model="manageCtrl.user.age" required min="18"></input>
+    <div class="errors" ng-show="manageCtrl.form.$submitted">
+      <span ng-show="manageCtrl.form.age.$error.required">Campo obligatorio</span>
+    </div>
+    </label>
+    <label>
+    Trabajo:
+    <select name="job" ng-options="item as item for item in manageCtrl.jobs" ng-model="manageCtrl.user.job" required>
+      <option style="display:none" value="">Selecciona un valor</option>
+    </select>
+    <div class="errors" ng-show="manageCtrl.form.$submitted">
+      <span ng-show="manageCtrl.form.job.$error.required">Campo obligatorio</span>
+    </div>
+    </label>
+    <label>
+    Fecha de nacimiento:
+    <input type="date" name="date" ng-model="manageCtrl.user.date"></input><!--tengo todo organizado en user porque todos los ng-model lo tengo en user-->
+    </label>
+    <label>
+    <button type="submit">Enviar</button>
+  </form>
+
+
   </div>
 </body>
 </html>

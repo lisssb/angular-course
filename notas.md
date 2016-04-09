@@ -139,3 +139,23 @@ $get es lo que se configura en la etapa de run
 # Fromularios
 * En angular se permite meter form dentor de form. En html antes del 5 no se puede
 por defecto usar form, pero si tengo formularios embebidos usar ng-forms
+
+
+
+#CONCEPTOS
+## .bind
+var myFunc = function(){
+  alert(this.name);
+};
+var myFuncBind = myFunc.bind({name : 'Ra'}); //le paso el entorno donde se va a efectuar esa funcion
+myFunc();
+myFuncBind();
+
+
+## .call
+
+myFunc.call({name : 'Ra'}, p1, p2);
+
+## .apply
+
+myFunc.apply({name : 'Ra'}, [p1, p2]);

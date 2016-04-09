@@ -61,7 +61,7 @@ app.factory('UserFactory', [function(){
 
   };
 
-  var eidtUser = function(name, user){
+  var editUser = function(name, user){
 
   };
 
@@ -78,7 +78,15 @@ app.factory('UserFactory', [function(){
 
 }]);
 
-
+app.controller('ManageCtrl', [function(){
+  this.jobs = ["FullStack","Backend","Frontend","System administrator","CTO"]
+  this.onSubmit = function(){
+    if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
+      alert("sumi");
+      console.log(this.user)
+    }
+  };
+}]);
 app.controller('ParentCtrl', ['$filter', 'UserFactory', function($filter, UserFactory){
   this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
