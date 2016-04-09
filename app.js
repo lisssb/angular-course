@@ -1,50 +1,44 @@
 
 var app = angular.module('app', []);
 
-app.controller('ParentCtrl', [function(){
-  this.title="Mi agenda";
-  this.saluda = function(user){
-    alert(user.name);
-  };
-  this.onClick = function(e){
-    //console.log(e)
-    alert("Hola lola: " + e);
-  }
-  this.onChange= function(){
-    alert("cambio");
-  };
-
-  this.users = [{
+app.service('UserService', [function(){
+  var users = [{
     name : 'Liss',
     age : 28,
-    job : "",
+    job : "FullStack",
     date : Date.now()
   }, {
     name : 'Marcial',
     age : 27,
-    job : "",
+    job : "Backend",
     date :Date.now()
   },
   {
     name : "Elba",
     age : 45,
-    job : "",
+    job : "System administrator",
     date : Date.now()
   }, {
     name : 'Kate',
     age : 25,
-    job : "",
+    job : "Frontend",
     date :  Date.now()
   },
   {
     name : "Anthony",
     age : 21,
-    job : "",
+    job : "CTO",
     date : Date.now()
   }];
+  this.getUsers = function(){ //para que users sea privado
+    return users;
+  };
+}]);
 
+app.controller('ParentCtrl', ['$filter', 'UserService', function($filter, UserService){
+  this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
-
+  this.users = UserService.getUsers();
 
 
 }]);
@@ -59,10 +53,4 @@ app.filter ('pagination', [function(){
     }
     return arr;
   };
-}]);
-
-app.controller('ChildCtrl', [function(){
-  this.title="Controlador hijo";
-  //var a = $scope;
-  //debugger;
 }]);
