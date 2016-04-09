@@ -40,7 +40,7 @@ user.prototype.saluda = function({
 
 # ng-model
 este es el que es capaz de obtener los datos del usuario y guardarlos en el javascript.
-
+* tambien se encarga de las validadciones y transformaciones de los campos,
 
 
 
@@ -122,3 +122,20 @@ function(){
 }
 
 * el injector de angular injecta los servicios y factorias
+
+
+
+
+# etapas PROVIDER
+
+config --> $injector --> Run -->
+
+
+en config solo podemos injectar constantes
+$get es lo que se configura en la etapa de run
+
+
+
+# Fromularios
+* En angular se permite meter form dentor de form. En html antes del 5 no se puede
+por defecto usar form, pero si tengo formularios embebidos usar ng-forms
