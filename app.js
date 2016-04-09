@@ -17,24 +17,29 @@ app.controller('ParentCtrl', [function(){
   this.users = [{
     name : 'Liss',
     age : 28,
+    job : "",
     date : Date.now()
   }, {
     name : 'Marcial',
     age : 27,
+    job : "",
     date :Date.now()
   },
   {
     name : "Elba",
     age : 45,
+    job : "",
     date : Date.now()
   }, {
     name : 'Kate',
     age : 25,
+    job : "",
     date :  Date.now()
   },
   {
     name : "Anthony",
     age : 21,
+    job : "",
     date : Date.now()
   }];
 
