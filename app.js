@@ -1,6 +1,50 @@
 
 var app = angular.module('app', []);
 
+app.constant('API_URL', 'http://localhost:8000/api'); //no se puede modificar
+app.value('authToken', 'ssss');//esto si se puede modificar
+
+
+app.factory('UserFactory', [function(){
+  var users = [{
+    name : 'Liss',
+    age : 28,
+    job : "FullStack",
+    date : Date.now()
+  }, {
+    name : 'Marcial',
+    age : 27,
+    job : "Backend",
+    date :Date.now()
+  },
+  {
+    name : "Elba",
+    age : 45,
+    job : "System administrator",
+    date : Date.now()
+  }, {
+    name : 'Kate',
+    age : 25,
+    job : "Frontend",
+    date :  Date.now()
+  },
+  {
+    name : "Anthony",
+    age : 21,
+    job : "CTO",
+    date : Date.now()
+  }];
+
+  var getUsers = function(){
+    return users;
+  };
+
+  return {
+    getUsers : getUsers
+  }
+
+}]);
+
 app.service('UserService', [function(){
   var users = [{
     name : 'Liss',
@@ -35,10 +79,11 @@ app.service('UserService', [function(){
   };
 }]);
 
-app.controller('ParentCtrl', ['$filter', 'UserService', function($filter, UserService){
+app.controller('ParentCtrl', ['$filter', 'UserService', 'UserFactory', function($filter, UserService, UserFactory){
   this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
-  this.users = UserService.getUsers();
+  //this.users = UserService.getUsers();
+  this.users = UserFactory.getUsers();
 
 
 }]);

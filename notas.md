@@ -109,7 +109,7 @@ nos genera las opciones de un select. Tenemos que meterle ng-model
 en angular2 no existe niservice ni facory ni peovider
 
  * Service sigue el patron prototype. publico con this
- * Factory sigue el patron readmode?? publico devuelveu npobjeto
+ * Factory sigue el patron revealing modulepublico devuelveu npobjeto
 
 function(){
   var users = [{}};
