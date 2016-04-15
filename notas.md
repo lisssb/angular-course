@@ -165,3 +165,28 @@ myFunc.apply({name : 'Ra'}, [p1, p2]);
 #Engine messages ngMessages
 
 sirve para manejar errores de formularios
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#EVENTOS
+ a través del scope escuchamos y enviamos eventos.
+ * Emitir
+     * $emit. lo escuchan los de arriba
+     * $broadcast. lo escichan los de abajo
+     *  en el caso del rootscope con el broadcast lo escuchan todos y con el emit los que se hallan registrado.
+     * en caso de hermanos se suele usar el rootscope y se emite a uno determinado.
+ * $on

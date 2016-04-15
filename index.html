@@ -64,6 +64,10 @@
       <td>{{user.age | number:2}}</td>
       <td>{{user.date | date:parentCtrl.formatDate}}</td>
       <td>{{user.job}}</td>
+      <td>
+        <button type="button" ng-click="parentCtrl.editUser(user)">Edit</button>
+        <button type="button" ng-click="parentCtrl.deleteUser(user)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>
