@@ -76,14 +76,18 @@ app.factory('UserFactory', [function(){
   };
 
   var editUser = function(name, user){
-
+    for(var i = 0, length = users.length; i < length - 1; i++){
+      if(users[i].name === name){
+        users[i] = user;
+      }
+    }
   };
 
 
 
   var userEdit = null;
   var setUserEdit = function(user){
-    userEdit = user
+    userEdit = angular.copy(user); // esto lo hago para uqe no se me modifique en la tabla, no hago la referencia al mismo objecto
   }
 
   var getUserEdit = function(){
@@ -104,15 +108,28 @@ app.factory('UserFactory', [function(){
 app.controller('ManageCtrl', ['UserFactory', '$rootScope', function(UserFactory, $rootScope){
   this.jobs = ["FullStack","Backend","Frontend","System administrator","CTO"]
   //this.user = UserFactory.userEdit;
+  this.isEdit = false;
+  //this.nameEdit = angular.copy(this.user.name);
+  //this.nameEdit = null;
 
   $rootScope.$on('edituser', function(event, user){
     this.user = UserFactory.getUserEdit();
+    this.isEdit = true;
+    this.nameEdit = angular.copy(this.user.name);
   }.bind(this));
 
   this.onSubmit = function(){
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
     //debugger;
-      UserFactory.createUser(angular.copy(this.user));
+      if(this.isEdit){
+        UserFactory.editUser(this.nameEdit, angular.copy(this.user));
+      }
+      else{
+        UserFactory.createUser(angular.copy(this.user));
+      }
+
+      this.isEdit = false;
+      this.nameEdit = null;
       this.user = null;
       this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
     }
