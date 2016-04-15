@@ -1,6 +1,52 @@
 
 var app = angular.module('app', ['ngMessages']);
 
+app.directive('nif', [function(){
+  return {
+    restrict: 'A',
+    require : 'ngModel',
+    link : function(scope, elem, atts, ctrl){ //ctrl -> controlador del ngModel
+      
+
+      ctrl.$validators.nif = function (modelValue, viewValue) {
+
+        var expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+
+        if(expresion_regular_dni.test(viewValue) == true) {
+
+          var numero = dni.substr(0, viewValue.length - 1);
+
+          var letr = viewValue.substr(viewValue.length - 1, 1);
+
+          numero = numero % 23;
+
+          var letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
+
+          letra = letra.substring(numero, numero + 1);
+
+          if(letra != letr.toUpperCase()) {
+
+            return false;
+
+          } else {
+
+            return true;
+
+          }
+
+        } else {
+
+          return false;
+
+        }
+
+      }
+
+
+    }
+  }
+}]);
+
 app.constant('API_URL', 'http://localhost:8000/api'); //no se puede modificar
 app.value('authToken', 'ssss');//esto si se puede modificar
 
@@ -121,31 +167,31 @@ app.controller('ManageCtrl', ['UserFactory', '$rootScope', function(UserFactory,
   this.onSubmit = function(){
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
     //debugger;
-      if(this.isEdit){
-        UserFactory.editUser(this.nameEdit, angular.copy(this.user));
-      }
-      else{
-        UserFactory.createUser(angular.copy(this.user));
-      }
+    if(this.isEdit){
+      UserFactory.editUser(this.nameEdit, angular.copy(this.user));
+    }
+    else{
+      UserFactory.createUser(angular.copy(this.user));
+    }
 
-      this.isEdit = false;
-      this.nameEdit = null;
-      this.user = null;
-      this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
-    }
-  };
-  this.addAddress = function(){
-    if(!this.user){
-      this.user = {
-        addresses : []
-      };
-    }
-    if(this.user && !this.user.addresses){
-      this.user.addresses = [];
-    }
-    this.user.addresses.push({});
-  };
-  //this.user = {addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]}
+    this.isEdit = false;
+    this.nameEdit = null;
+    this.user = null;
+    this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
+  }
+};
+this.addAddress = function(){
+  if(!this.user){
+    this.user = {
+      addresses : []
+    };
+  }
+  if(this.user && !this.user.addresses){
+    this.user.addresses = [];
+  }
+  this.user.addresses.push({});
+};
+//this.user = {addresses : [{city : "Madrid", cp: 28400}, {city: "rivas", cp: 28521}]}
 }]);
 
 

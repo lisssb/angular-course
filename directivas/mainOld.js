@@ -1,5 +1,8 @@
 var app = angular.module('app', []);
 
+
+
+
 app.directive('customFieldset', [function(){
   return {
     restrict: 'E',
@@ -22,13 +25,13 @@ app.directive('customFieldset', [function(){
 
 app.directive('helloWorld', [function(){
   return {
-    template : '<div></div><div></div><h1>Hello {{helloCtrl.name}} <button ng-click=helloCtrl.onClick()>Click!</button><input type="text" ng-model="name"></input></h1>',
+    //template : '<div></div><div></div><h1>Hello {{helloCtrl.name}} <button ng-click=helloCtrl.onClick()>Click!</button><input type="text" ng-model="name"></input></h1>',
     restric : 'AE',
     //replace : true,
     link : function($scope, elem, attrs){ // para acceder a un elemento en el dom
 
     },
-    //templateUrl : 'helloWorld.html',
+    templateUrl : 'helloWorld.html',
     controller : ['$scope', function($scope){
       this.variable = '000000';
     }],
