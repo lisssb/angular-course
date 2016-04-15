@@ -190,3 +190,7 @@ sirve para manejar errores de formularios
      *  en el caso del rootscope con el broadcast lo escuchan todos y con el emit los que se hallan registrado.
      * en caso de hermanos se suele usar el rootscope y se emite a uno determinado.
  * $on
+
+
+
+ #DIRECTIVAS
