@@ -159,3 +159,9 @@ myFunc.call({name : 'Ra'}, p1, p2);
 ## .apply
 
 myFunc.apply({name : 'Ra'}, [p1, p2]);
+
+
+
+#Engine messages ngMessages
+
+sirve para manejar errores de formularios

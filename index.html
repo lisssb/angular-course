@@ -7,6 +7,7 @@
   href="bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="main.css">
   <script type="text/javascript" src="./angular-1.5.3/angular.js"></script>
+  <script type="text/javascript" src="./angular-1.5.3/angular-messages.js"></script>
   <script type="text/javascript" src="app.js"></script>
   <style>
   .par{
@@ -77,27 +78,28 @@
   <form name="manageCtrl.form" novalidate ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"><!--podemos el manageCtrl para que form no se nos cree en el scope-->
     <label>
       Nombre:
-      <input type="text" name="name" ng-model="manageCtrl.user.name" required ng-minlength="4"></input>
-      <div class="errors" ng-show="manageCtrl.form.$submitted">
-        <span ng-show="manageCtrl.form.name.$error.required">Campo obligatorio</span>
-        <span ng-show="manageCtrl.form.name.$error.minlength">Minimo 4 caracteres</span>
-      </div>
+      <input type="text" name="name" ng-model="manageCtrl.user.name" required ng-minlength="4"/>
+      <ng-messages for="manageCtrl.form.name.$error">
+        <ng-message when="required">Campo obligatorio</ng-message>
+        <ng-message when="minlength">Minimo 4 caracteres</ng-message>
+      </ng-messages>
     </label>
     <label>
       Edad:
       <input type="number" name="age" ng-model="manageCtrl.user.age" required min="18"></input>
-      <div class="errors" ng-show="manageCtrl.form.$submitted">
-        <span ng-show="manageCtrl.form.age.$error.required">Campo obligatorio</span>
-      </div>
+      <ng-messages for="manageCtrl.form.age.$error">
+        <ng-message when="required">Campo obligatorio</ng-message>
+      </ng-messages>
     </label>
     <label>
       Trabajo:
       <select name="job" ng-options="item as item for item in manageCtrl.jobs" ng-model="manageCtrl.user.job" required>
         <option style="display:none" value="">Selecciona un valor</option>
       </select>
-      <div class="errors" ng-show="manageCtrl.form.$submitted">
-        <span ng-show="manageCtrl.form.job.$error.required">Campo obligatorio</span>
-      </div>
+      <ng-messages for="manageCtrl.form.job.$error">
+        <ng-message when="required">Campo obligatorio</ng-message>
+      </ng-messages>
+
     </label>
     <label>
       Fecha de nacimiento:
@@ -109,17 +111,17 @@
         <label>
           Ciudad:
           <input type="text" name="city" ng-model="address.city" required ng-minlength="4"></input>
-          <div class="errors" ng-show="manageCtrl.form.$submitted">
-            <span ng-show="addressForm.city.$error.required">Campo obligatorio</span>
-            <span ng-show="addressForm.city.$error.minlength">Minimo 4 caracteres</span>
-          </div>
+          <ng-messages for="addressForm.city.$error">
+            <ng-message when="required">Campo obligatorio</ng-message>
+            <ng-message when="minlength">Minimo 4 caracteres</ng-message>
+          </ng-messages>
         </label>
         <label>
           Codigo Portal:
           <input type="number" name="cp" ng-model="address.cp" required min="18"></input>
-          <div class="errors" ng-show="manageCtrl.form.$submitted">
-            <span ng-show="addressForm.cp.$error.required">Campo obligatorio</span>
-          </div>
+          <ng-messages for="addressForm.cp.$error">
+            <ng-message when="required">Campo obligatorio</ng-message>
+          </ng-messages>
         </label>
       </div>
       <button type="submit">Enviar</button>

@@ -1,5 +1,5 @@
 
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngMessages']);
 
 app.constant('API_URL', 'http://localhost:8000/api'); //no se puede modificar
 app.value('authToken', 'ssss');//esto si se puede modificar
@@ -87,7 +87,7 @@ app.controller('ManageCtrl', ['UserFactory', function(userFactory){
   this.jobs = ["FullStack","Backend","Frontend","System administrator","CTO"]
   this.onSubmit = function(){
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
-    debugger;
+    //debugger;
       userFactory.createUser(angular.copy(this.user));
       this.user = null;
       this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
