@@ -1,0 +1,69 @@
+<div  class="cold-md-6">
+
+  <form name="createCtrl.form" novalidate ng-submit="createCtrl.form.$valid && createCtrl.onSubmit()"><!--podemos el createCtrl para que form no se nos cree en el scope-->
+    <label>
+      Nombre:
+      <input type="text" name="name" ng-model="createCtrl.user.name" required ng-minlength="4" />
+      <ng-messages for="createCtrl.form.name.$error" ng-show="createCtrl.form.$submitted">
+        <ng-message when="required">Campo obligatorio</ng-message>
+        <ng-message when="minlength">Minimo 4 caracteres</ng-message>
+      </ng-messages>
+    </label>
+
+    <label>
+      Nif
+      <input type="text" name="nif" ng-model="createCtrl.user.nif"
+      required placeholder="Insert name" nif ng-model-options="{debounce:{ default: 2000}}"/>
+
+      <ng-messages class="errors" for="createCtrl.form.nif.$error" ng-show="createCtrl.form.$submitted">
+        <ng-message when="nif">Nif invalido</ng-message>
+      </ng-messages>
+
+    </label>
+
+
+    <label>
+      Edad:
+      <input type="number" name="age" ng-model="createCtrl.user.age" required min="18"></input>
+      <ng-messages for="createCtrl.form.age.$error" ng-show="createCtrl.form.$submitted">
+        <ng-message when="required">Campo obligatorio</ng-message>
+      </ng-messages>
+    </label>
+    <label>
+      Trabajo:
+      <select name="job" ng-options="item as item for item in createCtrl.jobs" ng-model="createCtrl.user.job" required>
+        <option style="display:none" value="">Selecciona un valor</option>
+      </select>
+      <ng-messages for="createCtrl.form.job.$error" ng-show="createCtrl.form.$submitted">
+        <ng-message when="required">Campo obligatorio</ng-message>
+      </ng-messages>
+
+    </label>
+    <label>
+      Fecha de nacimiento:
+      <input type="date" name="date" ng-model="createCtrl.user.date"></input><!--tengo todo organizado en user porque todos los ng-model lo tengo en user-->
+    </label>
+    <button type="button" ng-click="createCtrl.addAddress()">Agregar dirección</button>
+    <label>
+      <div ng-repeat="address in createCtrl.user.addresses" ng-form="addressForm">
+        <label>
+          Ciudad:
+          <input type="text" name="city" ng-model="address.city" required ng-minlength="4"></input>
+          <ng-messages for="addressForm.city.$error" ng-show="createCtrl.form.$submitted">
+            <ng-message when="required">Campo obligatorio</ng-message>
+            <ng-message when="minlength">Minimo 4 caracteres</ng-message>
+          </ng-messages>
+        </label>
+        <label>
+          Codigo Portal:
+          <input type="number" name="cp" ng-model="address.cp" required min="18"></input>
+          <ng-messages for="addressForm.cp.$error">
+            <ng-message when="required">Campo obligatorio</ng-message>
+          </ng-messages>
+        </label>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+
+
+  </div>

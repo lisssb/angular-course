@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./angular-1.5.3/angular.js" type="text/javascript">
+    </script>
+    <script src="./angular-1.5.3/angular-messages.js" type="text/javascript">
+    </script>
+    <script src="mainOld.js" type="text/javascript">
+    </script>
+
+
+</head>
+
+<body ng-app="app" ng-controller="ParentCtrl as parentCtrl">
+    <input type="text" ng-model="parentCtrl.name" />
+    <button ng-click="parentCtrl.click($event)">Click</button>
+    <custom-fieldset title="'Mi titulo'">
+        <custom-fieldset-header>
+            <h1>Contenido fieldset {{parentCtrl.name}}</h1>
+        </custom-fieldset-header>
+        <custom-fieldset-body>
+            <div> Contenido</div>
+        </custom-fieldset-body>
+    </custom-fieldset>
+    <hello-world nombre="parentCtrl.name" on-click="parentCtrl.click(evento, name)"></hello-world>
+    
+</body>
+
+
+</html>

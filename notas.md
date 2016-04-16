@@ -193,4 +193,29 @@ sirve para manejar errores de formularios
 
 
 
- #DIRECTIVAS
+ # UI-ROUTE
+
+se especifica un alias a la que le asignarmos, un conrolador, url y template
+
+#Ng-route
+
+se especifica controlador template
+
+
+
+
+
+/ app
+- /app/user
+
+
+
+
+
+<3 al hacer un go, ejecutamos lo que esta en el controller???
+
+
+ui route nos lanza eventos change start, error....
+---/app/user/create
+....
+...

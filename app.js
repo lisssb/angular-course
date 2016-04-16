@@ -1,12 +1,12 @@
 
-var app = angular.module('app', ['ngMessages']);
+var app = angular.module('app', ['ngMessages', 'ui.router']);
 
 app.directive('nif', [function(){
   return {
     restrict: 'A',
     require : 'ngModel',
     link : function(scope, elem, atts, ctrl){ //ctrl -> controlador del ngModel
-      
+
 
       ctrl.$validators.nif = function (modelValue, viewValue) {
 

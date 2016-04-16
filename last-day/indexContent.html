@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="angular-1.5.3/angular.js" type="text/javascript">
+        </script>
+        <script src="angular-1.5.3/angular-messages.js" type="text/javascript">
+        </script>
+        <script src="ui-router.js" type="text/javascript">
+        </script>
+        <script src="main.js" type="text/javascript">
+        </script>
+        <style>
+            .col-md-6{
+                float: left;
+                width: 50%;
+                margin: 0;
+
+            }
+            label{
+                display: block;
+            }
+            .errors{
+                color: red;
+            }
+        </style>
+
+    </head>
+    <body ng-app="app" >
+         <div ng-controller="ParentCtrl as parentCtrl" class="col-md-6">
+            <select ng-model="parentCtrl.numElems"
+            ng-init="parentCtrl.numElems = 2"
+            ng-options="item as item for item in [2, 5, 10]">
+
+            </select>
+            <label>
+                Busqueda por nombre
+                <input type="text" ng-model="parentCtrl.search.name"/>
+            </label>
+            <label>
+                Busqueda por job
+                <input type="text" ng-model="parentCtrl.search.job"/>
+            </label>
+            <table>
+                <thead>
+                    <tr>
+                        <th ng-click="parentCtrl.sort ==='name'? parentCtrl.sort = '-name' : parentCtrl.sort = 'name'">Nombre</th>
+                        <th ng-click="parentCtrl.sort ==='age'? parentCtrl.sort = '-age' : parentCtrl.sort = 'age'">Edad</th>
+                        <th ng-click="parentCtrl.sort ==='birthDate'? parentCtrl.sort = '-birthDate' : parentCtrl.sort = 'birthDate'">Fecha nacimiento</th>
+                        <th ng-click="parentCtrl.sort ==='job'? parentCtrl.sort = '-job' : parentCtrl.sort = 'job'">Trabajo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in parentCtrl.users |
+                            filter:parentCtrl.search |
+                            orderBy:parentCtrl.sort |
+                            limitTo:parentCtrl.numElems:parentCtrl.offset">
+                        <td>{{user.name}}</td>
+                        <td>{{user.age}}</td>
+                        <td>{{user.birthDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{user.job }}</td>
+                        <td>
+                            <button type="button" ng-click="parentCtrl.editUser(user)">Editar</button>
+                            <button type="button" ng-click="parentCtrl.removeUser(user)">Borrar</button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div>
+                <button type="button"
+                ng-click="parentCtrl.offset=i*parentCtrl.numElems"
+                ng-repeat="i in parentCtrl.users | filter:parentCtrl.search| pagination:parentCtrl.numElems">
+                    Pagina {{i+1}}
+                </button>
+
+            </div>
+        </div>
+        <div ng-controller="ManageCtrl as manageCtrl"  class="col-md-6">
+            <form name="manageCtrl.form" novalidate ng-submit="manageCtrl.onSubmit()">
+                <label>
+                    Nombre
+                    <input type="text" name="name" ng-model="manageCtrl.user.name"
+                    required ng-minlength="4" placeholder="Insert name"/>
+
+                    <ng-messages class="errors" for="manageCtrl.form.name.$error" ng-show="manageCtrl.form.$submitted">
+                        <ng-message when="required">Campo obligatorio</ng-message>
+                        <ng-message when="minlength">Minimo 4 caracteres</ng-message>
+                    </ng-messages>
+
+                </label>
+                <label>
+                    Nif
+                    <input type="text" name="nif" ng-model="manageCtrl.user.nif"
+                    required placeholder="Insert name" nif ng-model-options="{debounce:{ default: 2000}}"/>
+
+                    <ng-messages class="errors" for="manageCtrl.form.nif.$error" ng-show="manageCtrl.form.$submitted">
+                        <ng-message when="nif">Nif invalido</ng-message>
+                    </ng-messages>
+
+                </label>
+                <label>
+                    Edad
+                    <input type="number" name="age" ng-model="manageCtrl.user.age"
+                    required/>
+                    <div class="errors" ng-show="manageCtrl.form.$submitted">
+                        <span ng-show="manageCtrl.form.age.$error.required">Campo obligatorio</span>
+                    </div>
+                </label>
+                <label>
+                    Trabajo
+                    <select name="job" ng-options="item as item for item in manageCtrl.jobs"
+                    ng-model="manageCtrl.user.job" required>
+                        <option style="display:none" value="">selecciona un trabajo</option>
+                    </select>
+                    <div class="errors" ng-show="manageCtrl.form.$submitted">
+                        <span ng-show="manageCtrl.form.job.$error.required">Campo obligatorio</span>
+                    </div>
+                </label>
+                <label>
+                    Fecha de nacimiento
+                    <input type="date" id="birth" name="birthDate" ng-model="manageCtrl.user.birthDate">
+                </label>
+                <button type="button" ng-click="manageCtrl.addAddress()">Agregar dirección</button>
+                <div ng-repeat="address in manageCtrl.user.addresses" ng-form="addressForm">
+                    <label>
+                        Ciudad
+                        <input type="text" name="city" ng-model="address.city"
+                        required ng-minlength="4"/>
+                        <div class="errors" ng-show="manageCtrl.form.$submitted">
+                            <span ng-show="addressForm.city.$error.required">Campo obligatorio</span>
+                            <span ng-show="addressForm.city.$error.minlength">Minimo 4 caracteres</span>
+                        </div>
+                    </label>
+                    <label>
+                        CP
+                        <input type="number" name="cp" ng-model="address.cp"
+                        required/>
+                        <div class="errors" ng-show="manageCtrl.form.$submitted">
+                            <span ng-show="addressForm.cp.$error.required">Campo obligatorio</span>
+                        </div>
+                    </label>
+                </div>
+
+
+                <button type="submit" >Enviar</button>
+            </form>
+        </div>
+    </body>
+
+</html>

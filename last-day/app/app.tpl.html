@@ -1,0 +1,15 @@
+<div>
+    Aplicación del curso
+    <button ng-click="appCtrl.login('admin')">Admin</button>
+    <button ng-click="appCtrl.login('user')">User</button>
+    <ul class="menu">
+        <li><a ui-sref="app.user.list">Listado</a></li>
+        <li><a ui-sref="app.user.create">Creacion</a></li>
+    </ul>
+
+
+    <div class="content" ui-view>
+
+    </div>
+
+</div>
