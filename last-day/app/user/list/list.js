@@ -7,18 +7,40 @@ app.config(['$stateProvider', function($stateProvider){
         templateUrl: 'app/user/list/list.tpl.html',
         data : {
           roles: ['user', 'admin'] // decimos que estos roles pueden entrar
+        },
+        resolve : {//para navegar en la pagina cuando ya tengamos cargados los ususarios
+          users : ['UserFactory', function(UserFactory){ // esto lo puedo tratar en el onerror
+            console.log("entra aqqqqqqqqqqqq")
+            return UserFactory.getUsers();
+          }]
         }
     });
 }]);
-app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', function($filter, UserFactory, $rootScope, $state){
+app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', 'users', function($filter, UserFactory, $rootScope, $state, users){
+  var listCtrl = this;
   this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
   //this.users = UserService.getUsers();
-  this.users = UserFactory.getUsers();
+  // UserFactory.getUsers().then(function(res){
+  //   this.users = res.data;
+  // }.bind(this), function(error){
+  //   alert("error");
+  // });
+
+  this.users = users.data;
+  var updateList = function(users){
+    UserFactory.getUsers().then(function(res){
+      this.users = res.data;
+    }.bind(this));
+  }.bind(this);
 
   this.deleteUser = function(user){
-    UserFactory.deleteUser(user.name);
-  };
+    UserFactory.deleteUser(user.name).then(function(){
+      alert ("Usuario eiminado corretamete");
+      updateList();
+    });
+  }.bind(this);
+
   this.editUser = function(user){
     $state.go('app.user.edit', {name: user.name});
 

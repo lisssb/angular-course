@@ -1,54 +1,24 @@
 var app = angular.module('app', ['ngMessages', 'ui.router', 'app.user']);
+app.constant('API_URL', 'http://localhost:8000/api');
 
 
-app.factory('UserFactory', [function () {
-    var users = [{
-        name: 'Ra',
-        age: 28,
-        job: 'FullStack',
-        birthDate: new Date()
-    }, {
-        name: 'Pepe',
-        age: 18,
-        job: 'Frontend',
-        birthDate: new Date()
-    }, {
-        name: 'Jose',
-        age: 40,
-        job: 'Backend',
-        birthDate: new Date()
-    }, {
-        name: 'Pepito',
-        age: 35,
-        job: 'FullStack',
-        birthDate: new Date()
-    }];
-
-    var userEdit = null;
+app.factory('UserFactory', ['$http', 'API_URL', function ($http, API_URL) {
+    //var users = $http.get(API_URL);
+    //var userEdit = null;
 
     var getUsers = function () {
-        return users;
+        return $http.get(API_URL + '/users');
     };
     var createUser = function (user) {
-        users.push(user);
+        return $http.post(API_URL + '/users/', user);
     };
 
     var deleteUser = function (name) {
-        for(var i = 0, length = users.length; i < length; i++) {
-            if(users[i].name === name) {
-                users.splice(i, 1);
-                break;
-            }
-        }
+      return $http.delete(API_URL + '/users/' + name);
     };
 
     var editUser = function (name, user) {
-        for(var i = 0, length = users.length; i < length; i++) {
-            if(users[i].name === name) {
-                users[i] = user;
-                break;
-            }
-        }
+      return $http.put(API_URL + '/users/' + name, user);
     };
 
     var setUserEdit = function (user) {
@@ -60,11 +30,7 @@ app.factory('UserFactory', [function () {
     };
 
     var getUserByName = function(name){
-      for(var i = 0, length = users.length; i < length; i++) {
-          if(users[i].name === name) {
-              return users[i];
-          }
-      }
+      return $http.get(API_URL + '/users/' + name);
     }
 
     return {
@@ -104,7 +70,7 @@ app.controller('AppCtrl', ['AuthFactory', function(AuthFactory){
 }]);
 
 app.factory('AuthFactory', function(){
-  var loggedUser = {};
+  var loggedUser = { role : 'admin'};
   var login = function(role){
         loggedUser.role = role;
 

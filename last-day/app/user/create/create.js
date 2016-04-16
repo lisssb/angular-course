@@ -7,6 +7,11 @@ app.config(['$stateProvider', function($stateProvider){
         templateUrl: 'app/user/create/create.tpl.html',
         data : {
           roles: ['admin'] // decimos que estos roles pueden entrar
+        },
+        resolve : {
+          user : function(){ // esto es porque no tengo un usuario y para que no me pete
+            return null;
+          }
         }
     });
     $stateProvider.state('app.user.edit', {//siempre sufijo de provider en el config, en el controller es solo state
@@ -15,10 +20,16 @@ app.config(['$stateProvider', function($stateProvider){
         templateUrl: 'app/user/create/create.tpl.html',
         data : {
           roles: ['admin'] // decimos que estos roles pueden entrar
+        },
+        resolve : {
+          user: ['UserFactory', '$stateParams', function(UserFactory, $stateParams){
+            return UserFactory.getUserByName($stateParams.name);
+          }]
         }
     });
 }]);
-app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '$stateParams', function($scope, UserFactory, $rootScope, $state, $stateParams){
+app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '$stateParams', 'user',
+ function($scope, UserFactory, $rootScope, $state, $stateParams, user){
 
 
 
@@ -36,24 +47,31 @@ app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '
 
   if($stateParams.name){
     this.isEdit = true;
-    this.user = UserFactory.getUserByName($stateParams.name);
+    this.user = user.data;
   }
 
   this.onSubmit = function(){
+    var promise = null;
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
     //debugger;
     if(this.isEdit){
-      UserFactory.editUser($stateParams.name, angular.copy(this.user));
+      promise = UserFactory.editUser($stateParams.name, this.user);
     }
     else{
-      UserFactory.createUser(angular.copy(this.user));
+      promise = UserFactory.createUser(this.user);
     }
 
-    this.isEdit = false;
-    this.nameEdit = null;
-    this.user = null;
-    this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
-    $state.go('app.user.list');
+    promise.then(function(){
+      $state.go('app.user.list');
+    }, function(err){
+      alert('Error')
+    });
+
+    // this.isEdit = false;
+    // this.nameEdit = null;
+    // this.user = null;
+    // this.form.$setPristine(); // esto nos sirve para limpiar el formulario (reset de un formulario)
+    // $state.go('app.user.list');
   }
 };
 this.addAddress = function(){
