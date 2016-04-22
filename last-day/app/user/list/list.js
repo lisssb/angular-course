@@ -8,15 +8,16 @@ app.config(['$stateProvider', function($stateProvider){
         data : {
           roles: ['user', 'admin'] // decimos que estos roles pueden entrar
         },
+        // el resolve siempre necesit una promesa o una referencia a un objeto
         resolve : {//para navegar en la pagina cuando ya tengamos cargados los ususarios
-          users : ['UserFactory', function(UserFactory){ // esto lo puedo tratar en el onerror
-            console.log("entra aqqqqqqqqqqqq")
-            return UserFactory.getUsers();
-          }]
+          // users : ['UserFactory', function(UserFactory){ // esto lo puedo tratar en el onerror
+          //   return UserFactory.getUsers();
+          // }]
         }
     });
 }]);
-app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', 'users', function($filter, UserFactory, $rootScope, $state, users){
+app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', /*'users',*/
+function($filter, UserFactory, $rootScope, $state ){
   var listCtrl = this;
   this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
@@ -27,15 +28,13 @@ app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', 'u
   //   alert("error");
   // });
 
-  this.users = users.data;
+  this.users = UserFactory.query();//users.data;
   var updateList = function(users){
-    UserFactory.getUsers().then(function(res){
-      this.users = res.data;
-    }.bind(this));
+    this.users = UserFactory.query();
   }.bind(this);
 
   this.deleteUser = function(user){
-    UserFactory.deleteUser(user.name).then(function(){
+    user.$delete().then(function(){ //////
       alert ("Usuario eiminado corretamete");
       updateList();
     });

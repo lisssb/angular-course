@@ -23,17 +23,13 @@ app.config(['$stateProvider', function($stateProvider){
         },
         resolve : {
           user: ['UserFactory', '$stateParams', function(UserFactory, $stateParams){
-            return UserFactory.getUserByName($stateParams.name);
+            return UserFactory.get({ name : $stateParams.name}).$promise;
           }]
         }
     });
 }]);
 app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '$stateParams', 'user',
  function($scope, UserFactory, $rootScope, $state, $stateParams, user){
-
-
-
-
   this.jobs = ["FullStack","Backend","Frontend","System administrator","CTO"]
   //this.user = UserFactory.userEdit;
   this.isEdit = false;
@@ -47,7 +43,7 @@ app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '
 
   if($stateParams.name){
     this.isEdit = true;
-    this.user = user.data;
+    this.user = user;
   }
 
   this.onSubmit = function(){
@@ -55,10 +51,10 @@ app.controller('CreateCtrl', ['$scope', 'UserFactory', '$rootScope', '$state', '
     if(this.form.$valid){ // esto es necesario si no agrego ng-submit="manageCtrl.form.$valid && manageCtrl.onSubmit()"
     //debugger;
     if(this.isEdit){
-      promise = UserFactory.editUser($stateParams.name, this.user);
+      promise = user.$update();
     }
     else{
-      promise = UserFactory.createUser(this.user);
+      promise = UserFactory.save(this.user).$promise;
     }
 
     promise.then(function(){

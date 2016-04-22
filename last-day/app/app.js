@@ -1,48 +1,22 @@
-var app = angular.module('app', ['ngMessages', 'ui.router', 'app.user']);
+var app = angular.module('app', ['ngMessages', 'ui.router', 'app.user', 'ngResource']);
 app.constant('API_URL', 'http://localhost:8000/api');
 
 
-app.factory('UserFactory', ['$http', 'API_URL', function ($http, API_URL) {
-    //var users = $http.get(API_URL);
-    //var userEdit = null;
-
-    var getUsers = function () {
-        return $http.get(API_URL + '/users');
-    };
-    var createUser = function (user) {
-        return $http.post(API_URL + '/users/', user);
-    };
-
-    var deleteUser = function (name) {
-      return $http.delete(API_URL + '/users/' + name);
-    };
-
-    var editUser = function (name, user) {
-      return $http.put(API_URL + '/users/' + name, user);
-    };
-
-    var setUserEdit = function (user) {
-        userEdit = angular.copy(user);
-    };
-
-    var getUserEdit = function () {
-        return userEdit;
-    };
-
-    var getUserByName = function(name){
-      return $http.get(API_URL + '/users/' + name);
+app.factory('UserFactory', ['$resource', 'API_URL', function ($resource, API_URL) {
+  return $resource(API_URL + '/users/:name', {name : '@name'}, {
+    save: {
+      method : 'POST', // por defecto es GET
+      params: {
+        name: '' //para decirle que este parametro en el save debe ser vacio
+      }
+    },
+    update: {
+      method : 'PUT',
+      params : {
+        name : '@name' // le digo que el name de mi url vienen de el name del objeto (@name)
+      }
     }
-
-    return {
-        getUsers: getUsers,
-        createUser: createUser,
-        deleteUser: deleteUser,
-        editUser: editUser,
-        setUserEdit: setUserEdit,
-        getUserEdit: getUserEdit,
-        getUserByName : getUserByName
-    };
-
+  }) // @ que lo busque dentro del objeto que estamos enviando en la peticion.
 }]);
 
 
