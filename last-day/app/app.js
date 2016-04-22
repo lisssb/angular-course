@@ -72,3 +72,8 @@ app.run(['$rootScope', 'AuthFactory', '$state', function($rootScope, AuthFactory
 
     });
 }]);
+
+
+// app.run(['$templateCache', function($templateCache){
+//   $templateCache.put('app/user/list/list.tpl.html', '<h1>Cacheado</h1>');
+// }]);
