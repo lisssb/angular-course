@@ -47,3 +47,7 @@ ng-app no deberia estar en el mismo sitio de ui-view
 ng-leaeçve-preprare
 ng-leave
 ng-leave-active
+
+
+brook
+geffeet

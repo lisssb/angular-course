@@ -16,9 +16,14 @@ app.config(['$stateProvider', function($stateProvider){
         }
     });
 }]);
-app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', /*'users',*/
-function($filter, UserFactory, $rootScope, $state ){
-  var listCtrl = this;
+app.controller('ListCtrl', ['$filter', 'UserFactory', '$rootScope', '$state', '$http', 'API_URL', /*'users',*/
+function($filter, UserFactory, $rootScope, $state , $http, API_URL){
+  var listCtrl = this
+
+  $http.get(API_URL+ '/users').then(function(res){
+    this.nuevosUsuarios = res.data;
+  }.bind(this));
+
   this.title="Mi agenda";
   this.formats = [{name : 'español', format: 'dd/MM/yyyy'},{name : 'ingles', format:  'MM/dd/yyyy'}];
   //this.users = UserService.getUsers();
