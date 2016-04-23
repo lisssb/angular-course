@@ -27,6 +27,11 @@ function($filter, UserFactory, $rootScope, $state ){
   // }.bind(this), function(error){
   //   alert("error");
   // });
+  if(this.users){
+    this.users.map(function(item){
+      item.name = item.name.toUpperCase();
+    })
+  }
 
   this.users = UserFactory.query();//users.data;
   var updateList = function(users){
